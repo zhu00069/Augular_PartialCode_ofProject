@@ -1,0 +1,126 @@
+<div class="ui loading form" [ngClass]="{ 'loading': isFormLoading }">
+  <div class="ui negative message" [hidden]="!AddCardError">
+	<p style="text-align: center;">{{AddCardErrorMsg}}</p>
+  </div>
+  <div class="ui positive message" [hidden]="!AddCardSuccess">
+	<p style="text-align: center;">{{AddCardSuccessMsg}}</p>
+  </div>
+<div class="ui grid">
+
+	<ng-container *ngIf="paymentMethods != null && paymentMethods.length >= 1">
+		<div style="text-align:center" class="ui twelve wide centered column grid" *ngFor="let aPaymentMethod of paymentMethods">
+			<div style="text-align:center" *ngIf="isPurchase" class="ui twelve wide centered column grid">
+				<label style="width:100%">
+					<div class="primary-text-color " style="background-color:#f9f9f9!important; font-size:20px; text-align:center;">You account current balance: <strong>${{balanceAmount}} </strong></div>
+					<div class="primary-text-color " style="background-color:#f9f9f9!important; font-size:20px; text-align:center;">Subscription {{subscriptionType}} charge: <strong>${{subscriptionTotal}} </strong></div>	
+					<div *ngIf="!isUpdate" class="primary-text-color " style="background-color:#f9f9f9!important; font-size:20px; text-align:center;">Amount to be paid for the order: <strong>${{subscriptionTotal}} </strong></div>
+					<!-- <div *ngIf="isUpdate" class="primary-text-color " style="background-color:#f9f9f9!important; font-size:20px; text-align:center;">Amount to be paid for the order: <strong>${{totalAmount-initialPrice}} </strong></div> -->
+					<div *ngIf="isUpdate" class="primary-text-color " style="background-color:#f9f9f9!important; font-size:20px; text-align:center;">Amount to be paid for the order: <strong>${{calculatePayAmount()}} </strong></div>
+					<div class="primary-text-color " style="background-color:#f9f9f9!important; font-size:20px; text-align:center;">Amount to be charge from credit card: <strong>${{amountFromCredit()}} </strong></div>			
+				</label>
+
+			</div>
+			<div style="text-align:center" *ngIf="!isUpdate && isPurchase" class="ui twelve wide centered column grid">
+				<form ngNoForm class="ui twelve wide centered column" [formGroup]="instanceNameFormGroup">
+					<label style="width:100%">
+						<input type="text" id="insatnceName" placeholder="Instance Name" formControlName="instanceName" i18n-placeholder/>
+					</label>
+				</form>
+			</div>
+
+			<div class="doubling three column row" [ngClass]="{'transactionError':false}">
+			<div class="column">
+				<p style="text-align: center;" *ngIf="isNotEnough">{{aPaymentMethod.type}}</p>
+			</div>
+			<div class="column">
+				<p style="text-align: center;" *ngIf="isNotEnough">**** **** **** {{aPaymentMethod.last4}}</p>
+			</div>
+			<div class="column">
+				<div *ngIf="!aPaymentMethod.isConfirmed"><small>Your card is pending approval.</small></div>
+				<!-- conditional ng class based on isConfirmed-->
+				<button *ngIf="!isPurchase" class="ui button red" (click)="removePaymentMethod(aPaymentMethod)">Remove</button>
+				<button *ngIf="!isPurchase" class="ui button green" [ngClass]="{'disabled':!aPaymentMethod.isConfirmed}" (click)="openCreditForm()">Purchase Credit</button>
+				<button *ngIf="isPurchase && !isUpdate" class="ui button green" [ngClass]="{'disabled':!isNotEnough || chargeCreditFromCard ==0 || !aPaymentMethod.isConfirmed}" (click)="buyCreditWhenPurchase()">Pay ${{chargeCreditFromCard}} from credit card</button>
+				<button *ngIf="isPurchase && !isUpdate" class="ui button green" [ngClass]="{'disabled':isNotEnough}" (click)="toPay()">Subscribe ${{subscriptionTotal}} {{subscriptionType}}</button>
+				
+				<button *ngIf="isPurchase && isUpdate" class="ui button green" [ngClass]="{'disabled':isNotEnough}" (click)="updateSubscription(anInstance)">Subscribe ${{subscriptionTotal}} {{subscriptionType}}</button>
+				<button *ngIf="isPurchase && isUpdate" class="ui button green" [ngClass]="{'disabled':!isNotEnough}" (click)="buyCreditWhenPurchase()">Pay ${{chargeCreditFromCard}} from credit card</button>
+			</div>	
+			</div>
+			<div class="ui divider"></div>
+		</div>
+	</ng-container>
+
+
+<ng-container *ngIf="isCreditPurchase">
+		<div style="text-align:center" class="ui twelve wide centered column grid">
+				<form ngNoForm class="ui twelve wide centered column" [formGroup]="purchaseCreditFormGroup">
+
+						<div class="fields fluid grid">
+							<div class="field eight wide column">
+							<label style="width:100%">
+								<input type="text" id="amount" placeholder="Amount" formControlName="amount" i18n-placeholder/>
+							</label>
+							</div>
+							<div class="field four wide column">
+								<button class="ui fluid positive  button" (click)="buyCredit()">
+									<span i18n>Pay</span>
+								</button>
+							</div>
+							<div class="field four wide column">
+								<button class="ui fluid negative  button" (click)="closeCreditForm()">
+									<span i18n>Cancle</span>
+								</button>  
+							</div>
+						</div>
+						</form>
+		</div>
+</ng-container>
+		
+<ng-container *ngIf="paymentMethods == null || paymentMethods.length == 0">
+<h4 i18n>Add a New Card:</h4>
+<form ngNoForm class="ui form ten wide centered column" [formGroup]="newCardFormGroup"   id="brick-creditcard-form">
+ <input name="custom_parameter" type="hidden" value="custom_value"/>
+
+<div class="field">
+<div class="fields fluid grid">
+<div class="field eight wide column">
+  <input data-brick="first-name" type="text" id="first-name" placeholder="First Name" formControlName="firstName"  i18n-placeholder/>
+</div>
+<div class="field eight wide column">
+  <input data-brick="last-name" type="text" id="last-name" placeholder="Last Name" formControlName="lastName" i18n-placeholder/>
+</div>
+</div>
+<div class="ui input">
+	<input data-brick="card-number" type="text" id="card-number" placeholder="Card number" formControlName="cardNumber"  i18n-placeholder/>
+</div>
+</div>
+
+<div class="fields fluid grid">
+  <div class="field four wide column">
+  <div class="ui fluid input">
+	<label style="width:100%">
+        <input data-brick="card-expiration-month" type="text" size="2" id="card-exp-month" formControlName="expiry_month"  placeholder="MM" i18n-placeholder style="width:40%"/> /
+        <input data-brick="card-expiration-year" type="text" size="2" id="card-exp-year" formControlName="expiry_year"  placeholder="YY" i18n-placeholder style="width:40%"/>
+  </label>
+  </div>
+  </div>
+  <div class="field two wide column">
+  <div class="ui input">
+	<input data-brick="card-cvv" type="text" id="card-cvv" placeholder="CVV" formControlName="CVV"  i18n-placeholder/>
+  </div>
+  </div>
+  <div class="field ten wide column">
+		<button class="ui fluid positive  button" (click)="finalizeAndPay()">
+			<span i18n>Add</span>
+		</button>  
+  </div>
+
+</div>
+
+</form>
+</ng-container>
+	
+</div>
+
+</div>
