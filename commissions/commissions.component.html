@@ -1,0 +1,114 @@
+<div class="ui segment" id="commissionAmountTable" style="width:100%; overflow-x:scroll">
+    <!-- total commission amount report table -->
+    <table style="width:100%">
+        <tr>
+            <th>
+                <h4 i18n>Amount of Agent's Commissions</h4>
+            </th>
+            <th>
+                <h4 i18n>Amount of  Branch's Commissions</h4>
+            </th>
+            <th>
+                <h4 i18n>Total Commission</h4>
+            </th>
+        </tr>
+        <ng-container>
+            <ng-container>
+                <tr class="item" style="padding-bottom:60px; text-align:center;">
+                    <td>
+                        {{'$'+totalAmountAgentCommissions}}
+                    </td>
+                    <td>
+                        {{'$'+totalAmountBranchCommissions}}
+                    </td>
+                    <td>
+                        {{'$'+totolAmountCommissons}}
+                    </td>
+                </tr>
+            </ng-container>
+        </ng-container>
+    </table>
+</div>
+<div class="ui segment" id="commissionTable" style="width:100%; overflow-x:scroll">
+   <!-- commission report table -->
+    <table style="width:100%">
+        <tr>
+            <th>
+                <h4 i18n>Transaction ID</h4>
+            </th>
+            <th>
+                <h4 i18n>Date</h4>
+            </th>
+            <th>
+                <h4 i18n>Start Date</h4>
+            </th>
+            <th>
+                <h4 i18n>End Date</h4>
+            </th>
+            <th>
+                <h4 i18n>Total</h4>
+            </th>
+            <th>
+                <h4 i18n>Tax</h4>
+            </th>
+            <th>
+                <h4 i18n>Agent</h4>
+            </th>
+            <th>
+                <h4 i18n>Agent's Commission</h4>
+            </th>
+            <th>
+                <h4 i18n>Branch</h4>
+            </th>
+            <th>
+                <h4 i18n>Branch' Commission</h4>
+            </th>
+            <th>
+                <button class="ui right floated button positive" (click)="listToCsv()" i18n>Export CSV</button>
+            </th>
+        </tr>
+        <ng-container *ngFor="let anTransaction of transactions; let idx = index">
+            <ng-container>
+                <tr class="item" style="padding-bottom:60px; text-align:center;">
+                    <td>
+                        {{anTransaction._id}}
+                    </td>
+                    <td>
+                        {{formatDate(anTransaction.date)}}
+                    </td>
+                    <td>
+                        {{formatDate(anTransaction.startDate)}}
+                    </td>
+                    <td>
+                        {{formatDate(anTransaction.endDate)}}
+                    </td>
+                    <td>
+                        {{'$'+anTransaction.total}}
+                    </td>
+                    <td>
+                        {{'$'+anTransaction.tax}}
+                    </td>
+                    <td i18n>
+                        {{anTransaction.commissionInfo? _commission_angentName : '-'}}
+                    </td>
+                    <td i18n>
+                        {{anTransaction.commissionInfo? '$'+agentAmountCommission : 0}}
+                    </td>
+                    <td i18n>
+                        {{anTransaction.commissionInfo? _commission_branchName : '-'}}
+                    </td>
+                    <td i18n>
+                       {{anTransaction.commissionInfo? '$'+branchAmountCommission : 0}}
+                    </td> 
+
+                </tr>
+            </ng-container>
+        </ng-container>
+    </table>
+   
+</div>
+
+
+
+
+

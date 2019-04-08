@@ -1,0 +1,137 @@
+<div>
+	<div class="ui stackable two column grid">
+		<div class="twelve wide column container main-page-container">
+			<h2 i18n>Audit Trails</h2>
+			<div class="ui segment">
+				<h5>
+					<strong i18n>Filters:</strong>
+				</h5>
+				<div style="text-align:center">
+					<!-- Filters -->
+
+					<div class="ui stackable grid" id="filter">
+						<div>
+							<label i18n>Start Date</label>
+							<div class="ui small input">                                                                                      
+								<input type="date"  (change)="updateAuditTrails()" [(ngModel)]="filteredStartDate" >
+							</div>
+						</div>
+
+						<div>
+							<label i18n>End Date</label>
+							<div class="ui small input">
+								<input type="date"  (change)="updateAuditTrails()" [(ngModel)]="filteredEndDate">
+							</div>
+						</div>
+
+						<div>
+							<label i18n>Type</label>
+							<sui-select class="selection" 
+										[(ngModel)]="filteredType" 
+										[options]="types" [placeholder]="'Type'" 
+										#FilterselectSubscriptionType i18n-placeholder
+										(selectedOptionChange)="updateAuditTrails()">
+							<sui-select-option *ngFor="let option of FilterselectSubscriptionType.filteredOptions" [value]="option"></sui-select-option>
+							</sui-select>
+						</div>
+					</div>
+				</div>
+				<div class="ui divider" style="margin-top: 27px"></div>
+
+				<div class="pagination">
+				  <form ngNoForm class="ui twelve wide centered column" [formGroup]="pageSizeFormGroup">
+					<div class="ui equal width grid">
+					    <div class="column">  
+						   <button class="ui left grey floated button" (click)="onPrev()" [ngClass]="{ 'disabled': page === 1 }" >Previous</button>
+						</div>
+						<div class="column">
+							<label i18n>Page Size: </label>
+						   <input type="number" id="pageSize" placeholder="Number of Per Page" formControlName="pageSize" i18n-placeholder>	
+						</div>	
+						<div class="column">
+						   <button class="ui right floated button" (click)="onNext()" [ngClass]="{ 'disabled': lastPageReached }">Next</button>
+						   
+						</div>
+				    </div>
+				  </form>
+				</div>
+			
+				
+				
+				<!-- <div class="pagination">
+				<button class="ui left floated secondary button" (click)="onPrev()" [disabled]="page === 1 || loading">Previous</button>
+				<button *ngFor="let pageNum of getPages()" (click)="onPage(pageNum)"></button> 
+				<button class="ui right floated secondary button" (click)="onNext()" [disabled]="lastPage() || loading">Next</button>
+				<input type="text" id="pageSize" placeholder="Page Size" formControlName="pageSize" i18n-placeholder>
+		     	</div> -->
+				<!-- <section ng-controller="MyCtrl">
+						<button ng-click="previous()">previous</button>
+						<button ng-click="next()">next</button>
+						<div>{{current.name}}</div>
+				</section> -->
+					
+				<div class="ui segment" [ngClass]="{ 'loading': formIsLoading }" id="audittrailTable">
+					<table style="width:100%">
+						<thead style="background-image: linear-gradient(to right, #00c9c3 , #0084cf);">
+						<tr>						
+							<th>
+								<h4 style="color:white!important; font-size: 0.9rem" i18n>Users</h4>
+							</th>
+							<th>
+								<h4 style="color:white!important; font-size: 0.9rem" i18n>Status</h4>
+							</th>
+							<th>
+								<h4 style="color:white!important; font-size: 0.9rem" i18n>Event Type</h4>
+							</th>
+							<th>
+								<h4 style="color:white!important; font-size: 0.9rem" i18n>Event Details</h4>
+							</th>
+							<th>
+								<h4 style="color:white!important; font-size: 0.9rem" i18n>Event Date</h4>
+							</th>
+							<th>
+								<button class="ui right floated button positive" (click)="auditMessagesToCsv()" i18n>Export CSV</button>
+							</th>
+						</tr>
+						</thead>
+						<tbody>
+						<ng-container *ngFor="let aAuditMessage of this.auditMessages" >
+							<ng-container *ngIf = "(filteredType == 'All' || filteredType == aAuditMessage.type)" >
+								<tr class="item" style="padding-bottom:60px;">
+									<td>
+										{{aAuditMessage._id}}
+									</td>
+									<td>
+										{{aAuditMessage.status}}
+									</td>
+									<td>
+										{{aAuditMessage.type}}
+									</td>
+									<td>
+										{{aAuditMessage.details}}
+									</td>
+									<td>
+										{{aAuditMessage.createDate}}
+									</td>
+          
+								</tr>
+								<!-- <tr *ngIf="aTransaction.isBeingEdited">
+								<td colspan="7">
+									<app-detailedfinance [transaction]="aTransaction" displayStyle="none"></app-detailedfinance>
+								</td>
+							</tr> -->
+						    </ng-container>
+						</ng-container>
+					</tbody>
+					</table>
+				</div>
+			</div>
+
+		</div>
+		<!-- end of twelve wide column -->
+		<div class="four wide column">
+			<app-backofficeSidemenu></app-backofficeSidemenu>
+		</div>
+		<!-- end of four wide column -->
+	</div>
+</div>
