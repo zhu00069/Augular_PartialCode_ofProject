@@ -10,28 +10,7 @@
 		  </div>
 		</div>
 </form>
-<form ngNoForm *ngIf="!isTrial" class="ui form twelve wide centered column" [formGroup]="paymentFormGroup" action='https://sandbox.2checkout.com/checkout/purchase' method='post'  id="2coform{{orderFormNumber}}">
-<input type='hidden' name='sid' value='901374957' >
-<input type='hidden' name='mode' value='2CO' >
-<input type='hidden' name='li_0_type' value='product' >
-<input type='hidden' name='li_0_name' [(ngModel)]="productPurchaseDescription" [ngModelOptions]="{standalone: true}">
-<input type='hidden' name='li_0_product_id' value='001' >
-<input type='hidden' name='li_0__description' value='Onyx Product Purchase' >
-<input type='hidden' name='li_0_price' [(ngModel)]="totalAll" [ngModelOptions]="{standalone: true}">
-<!-- <input type='hidden' name='li_0_startup_fee' [(ngModel)]="totalStartUpForm-totalAll" [ngModelOptions]="{standalone: true}"> -->
-<input type='hidden' name='li_0_quantity' value='1' >
-<input type='hidden' name='li_0_recurrence' [(ngModel)]="recurrence" id = "recurrence{{orderFormNumber}}" [ngModelOptions]="{standalone: true}">
-<input type='hidden' name='li_0_duration' value='Forever' >
-<input type='hidden' name='li_0_tangible' value='N' >
-<input type='hidden' name='email' [(ngModel)]="customerEmail" id = "customeremail{{orderFormNumber}}" [ngModelOptions]="{standalone: true}">
-<input type='hidden' name='phone_extension' value='197' >
-<!-- <input type='hidden' name='purchase_step' value='payment-method' > -->
-<input type='hidden' name='subscriptionId' [(ngModel)]="subscriptionId" id = "subscriptionId{{orderFormNumber}}" [ngModelOptions]="{standalone: true}">
-<input type='hidden' name='replacementSubscriptionId' [(ngModel)]="replacementSubscriptionId" id = "replacementSubscriptionId{{orderFormNumber}}" [ngModelOptions]="{standalone: true}">
-<input type='hidden' name='accountId' [(ngModel)]="accountId" id = "accountId{{orderFormNumber}}" [ngModelOptions]="{standalone: true}">
-<input type='hidden' name='newInvoice' [(ngModel)]="newInvoice" id = "newInvoice{{orderFormNumber}}" [ngModelOptions]="{standalone: true}">
-<input type='hidden' name='taxprice' [(ngModel)]="taxPrice" id = "taxprice{{orderFormNumber}}" [ngModelOptions]="{standalone: true}">
-<input type='hidden' name='merchant_order_id' id = "merchant_order_id{{orderFormNumber}}" [(ngModel)]="subscriptionId" [ngModelOptions]="{standalone: true}">
+
 <h3 i18n>Billing information:</h3>
 <div class="field" [ngClass]="{ 'error': (paymentFormGroup.controls.checkoutName.dirty || paymentFormGroup.controls.checkoutName.touched) && paymentFormGroup.controls.checkoutName.invalid}">
 	<div class="ui input">
