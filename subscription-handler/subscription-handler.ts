@@ -44,7 +44,8 @@ createSubscription(dataIn){
 		}
 		});
 }
-
+	
+//author: Bo
 cancelSubscription(replacementSubscriptionId, dataIn) {
 	let loginStatus = this.authenticationHandler.isLoggedIn();
 		let headers = new Headers();
@@ -67,7 +68,8 @@ cancelSubscription(replacementSubscriptionId, dataIn) {
 		}
 		});
 }
-
+	
+//author: Bo
 confirmPayment(dataIn){
 	let loginStatus = this.authenticationHandler.isLoggedIn();
 	let headers = new Headers();
@@ -82,7 +84,8 @@ confirmPayment(dataIn){
 			});
 	});
 }
-
+	
+//author: Bo
 getProducts(){
 	let loginStatus = this.authenticationHandler.isLoggedIn();
 	let headers = new Headers();
@@ -102,7 +105,7 @@ getProducts(){
 	});
 	
 }
-
+//author: Bo
 getSubscriptions() {
 	let loginStatus = this.authenticationHandler.isLoggedIn();
 	let headers = new Headers();
@@ -121,7 +124,7 @@ getSubscriptions() {
 	}
 	});
 }
-
+//author: Bo
 getSubscriptionsRoot(condition) {
 	let loginStatus = this.authenticationHandler.isLoggedIn();
 	let headers = new Headers();
@@ -140,7 +143,7 @@ getSubscriptionsRoot(condition) {
 	}
 	});
 }
-
+//author: Bo
 updateSubscriptions(subscriptionId,dataIn) {
 	let loginStatus = this.authenticationHandler.isLoggedIn();
 	let headers = new Headers();
@@ -178,7 +181,7 @@ updateProductRoot(dataIn,productId) {
 	}
 	});
 }
-
+//author: Bo
 createProductRoot(dataIn) {
 	let loginStatus = this.authenticationHandler.isLoggedIn();
 	let headers = new Headers();
@@ -197,7 +200,7 @@ createProductRoot(dataIn) {
 	}
 	});
 }
-
+//author: Bo
 deleteProductRoot(productId) {
 	let loginStatus = this.authenticationHandler.isLoggedIn();
 	let headers = new Headers();
@@ -254,7 +257,7 @@ refundInvoiceTransaction(dataIn, refundTransactionId) {
 	}
 	});
 }
-
+//author: Bo
 refundPaymentTransaction(dataIn, refundTransactionId) {
 	let loginStatus = this.authenticationHandler.isLoggedIn();
 	let headers = new Headers();
@@ -311,7 +314,7 @@ getTransactionsFailedReporting() {
 	}
 	});
 }
-
+//author: Bo
 getCommissionsReporting(query){
 	let loginStatus = this.authenticationHandler.isLoggedIn();
 	let headers = new Headers();
@@ -345,7 +348,7 @@ getCommissionsReporting(query){
 	});
 	
   }
-
+//author: Bo
 getTransactionsSummaryReporting(query) {
 	let loginStatus = this.authenticationHandler.isLoggedIn();
 	let headers = new Headers();
@@ -384,7 +387,7 @@ getUserInformation(userId) {
 	}
 	});
 }
-
+//author: Bo
 createSubscriptionBalance(dataIn){
 	let loginStatus = this.authenticationHandler.isLoggedIn();
 	let headers = new Headers();
@@ -479,7 +482,7 @@ subscriptionUpdateAfterPurchase(_id, dataIn) {
 		}
 		});
 }
-
+//author: Bo
  getDiscountCode(Id) {
 	let loginStatus = this.authenticationHandler.isLoggedIn();
 	let headers = new Headers();
