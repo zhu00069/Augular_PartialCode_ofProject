@@ -55,21 +55,7 @@
 				    </div>
 				  </form>
 				</div>
-			
-				
-				
-				<!-- <div class="pagination">
-				<button class="ui left floated secondary button" (click)="onPrev()" [disabled]="page === 1 || loading">Previous</button>
-				<button *ngFor="let pageNum of getPages()" (click)="onPage(pageNum)"></button> 
-				<button class="ui right floated secondary button" (click)="onNext()" [disabled]="lastPage() || loading">Next</button>
-				<input type="text" id="pageSize" placeholder="Page Size" formControlName="pageSize" i18n-placeholder>
-		     	</div> -->
-				<!-- <section ng-controller="MyCtrl">
-						<button ng-click="previous()">previous</button>
-						<button ng-click="next()">next</button>
-						<div>{{current.name}}</div>
-				</section> -->
-					
+	
 				<div class="ui segment" [ngClass]="{ 'loading': formIsLoading }" id="audittrailTable">
 					<table style="width:100%">
 						<thead style="background-image: linear-gradient(to right, #00c9c3 , #0084cf);">
